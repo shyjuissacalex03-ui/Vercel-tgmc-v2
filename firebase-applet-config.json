@@ -1,12 +1,9 @@
 {
-  "projectId": "orbital-talent-vvr20",
-  "appId": "1:413770725133:web:01b9b19dc678c64476a244",
   "apiKey": "AIzaSyARG3ehu2n1B9NBQ7z-3RkMBIa7UOg2b-o",
   "authDomain": "orbital-talent-vvr20.firebaseapp.com",
-  "firestoreDatabaseId": "ai-studio-thegreatmissionc-b0a51e3f-cce4-4e2e-82a7-5d9b232e1cc3",
+  "projectId": "orbital-talent-vvr20",
   "storageBucket": "orbital-talent-vvr20.firebasestorage.app",
   "messagingSenderId": "413770725133",
-  "measurementId": "",
-  "oAuthClientId": "413770725133-1e2cptbjneqddg12cmloaj2tqc6n2fsf.apps.googleusercontent.com",
-  "recaptchaSiteKey": ""
+  "appId": "1:413770725133:web:01b9b19dc678c64476a244",
+  "firestoreDatabaseId": "ai-studio-thegreatmissionc-b0a51e3f-cce4-4e2e-82a7-5d9b232e1cc3"
 }

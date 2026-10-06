@@ -4,24 +4,24 @@ import { getFirestore, doc, getDocFromServer } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import defaultAppletConfig from "../../firebase-applet-config.json";
 
-// Resolve Firebase configuration from Vercel environment variables (VITE_FIREBASE_*)
-// with fallback to firebase-applet-config.json
+// Updated Firebase configuration from user console
 export const firebaseConfig = {
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || defaultAppletConfig.projectId || "orbital-talent-vvr20",
-  appId: import.meta.env.VITE_FIREBASE_APP_ID || defaultAppletConfig.appId || "",
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || defaultAppletConfig.apiKey || "",
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || defaultAppletConfig.authDomain || "orbital-talent-vvr20.firebaseapp.com",
+  apiKey: "AIzaSyARG3ehu2n1B9NBQ7z-3RkMBIa7UOg2b-o",
+  authDomain: "orbital-talent-vvr20.firebaseapp.com",
+  projectId: "orbital-talent-vvr20",
+  storageBucket: "orbital-talent-vvr20.firebasestorage.app",
+  messagingSenderId: "413770725133",
+  appId: "1:413770725133:web:01b9b19dc678c64476a244",
   firestoreDatabaseId: import.meta.env.VITE_FIREBASE_FIRESTORE_DATABASE_ID || defaultAppletConfig.firestoreDatabaseId || "ai-studio-thegreatmissionc-b0a51e3f-cce4-4e2e-82a7-5d9b232e1cc3",
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || defaultAppletConfig.storageBucket || "orbital-talent-vvr20.firebasestorage.app",
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || defaultAppletConfig.messagingSenderId || "",
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || defaultAppletConfig.measurementId || "",
 };
 
 // Initialize Firebase App
 export const app = initializeApp(firebaseConfig);
 
-// Initialize Firestore with specific database ID as required
-export const db = getFirestore(app, firebaseConfig.firestoreDatabaseId);
+// Initialize Firestore (with specific database ID when configured)
+export const db = firebaseConfig.firestoreDatabaseId && firebaseConfig.firestoreDatabaseId !== "(default)"
+  ? getFirestore(app, firebaseConfig.firestoreDatabaseId)
+  : getFirestore(app);
 
 // Initialize Firebase Authentication
 export const auth = getAuth(app);
