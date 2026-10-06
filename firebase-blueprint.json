@@ -1,0 +1,251 @@
+{
+  "entities": {
+    "PrayerRequest": {
+      "title": "PrayerRequest",
+      "description": "Prayer requests submitted by visitors or church members for pastoral intercession.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the prayer request"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the person requesting prayer",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "email": {
+          "type": "string",
+          "description": "Contact email address",
+          "format": "email",
+          "minLength": 5,
+          "maxLength": 150
+        },
+        "phone": {
+          "type": "string",
+          "description": "Optional phone number",
+          "maxLength": 30
+        },
+        "subject": {
+          "type": "string",
+          "description": "Brief prayer title or focus",
+          "maxLength": 200
+        },
+        "message": {
+          "type": "string",
+          "description": "Detailed prayer petition",
+          "minLength": 5,
+          "maxLength": 3000
+        },
+        "isPrivate": {
+          "type": "boolean",
+          "description": "Whether the request is confidential for pastoral team only"
+        },
+        "status": {
+          "type": "string",
+          "description": "Workflow status of prayer request",
+          "enum": ["pending", "prayed"]
+        },
+        "userId": {
+          "type": "string",
+          "description": "UID of the submitter if authenticated",
+          "maxLength": 128
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation timestamp in ISO format"
+        }
+      },
+      "required": ["name", "email", "message", "status", "createdAt"]
+    },
+    "ContactMessage": {
+      "title": "ContactMessage",
+      "description": "General enquiry messages sent through the church website.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the contact message"
+        },
+        "name": {
+          "type": "string",
+          "description": "Sender full name",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "email": {
+          "type": "string",
+          "description": "Sender email address",
+          "format": "email",
+          "minLength": 5,
+          "maxLength": 150
+        },
+        "phone": {
+          "type": "string",
+          "description": "Sender phone number",
+          "maxLength": 30
+        },
+        "subject": {
+          "type": "string",
+          "description": "Enquiry subject",
+          "maxLength": 200
+        },
+        "message": {
+          "type": "string",
+          "description": "Enquiry body text",
+          "minLength": 5,
+          "maxLength": 3000
+        },
+        "status": {
+          "type": "string",
+          "description": "Enquiry resolution state",
+          "enum": ["unread", "read", "replied"]
+        },
+        "userId": {
+          "type": "string",
+          "description": "UID of the submitter if authenticated",
+          "maxLength": 128
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation timestamp in ISO format"
+        }
+      },
+      "required": ["name", "email", "message", "status", "createdAt"]
+    },
+    "EventRSVP": {
+      "title": "EventRSVP",
+      "description": "Attendance RSVPs for Sunday worship and church events.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the RSVP record"
+        },
+        "eventId": {
+          "type": "string",
+          "description": "Target event identifier",
+          "maxLength": 128
+        },
+        "eventTitle": {
+          "type": "string",
+          "description": "Title of the registered event",
+          "maxLength": 200
+        },
+        "name": {
+          "type": "string",
+          "description": "Attendee full name",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "email": {
+          "type": "string",
+          "description": "Attendee email address",
+          "format": "email",
+          "minLength": 5,
+          "maxLength": 150
+        },
+        "attendees": {
+          "type": "string",
+          "description": "Number of attendees count"
+        },
+        "userId": {
+          "type": "string",
+          "description": "UID of the submitter if authenticated",
+          "maxLength": 128
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation timestamp in ISO format"
+        }
+      },
+      "required": ["eventId", "eventTitle", "name", "email", "attendees", "createdAt"]
+    },
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Public profile document for signed-in church members and visitors.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Firebase Auth UID",
+          "maxLength": 128
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Full display name",
+          "maxLength": 100
+        },
+        "email": {
+          "type": "string",
+          "description": "Account email address",
+          "format": "email",
+          "maxLength": 150
+        },
+        "photoURL": {
+          "type": "string",
+          "description": "Avatar image URL",
+          "maxLength": 500
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Account creation timestamp"
+        }
+      },
+      "required": ["userId", "email", "createdAt"]
+    },
+    "SiteContent": {
+      "title": "SiteContent",
+      "description": "Dynamic editable website content including hero slides, pastor details, core pillars, church info, events, gallery, and bank details.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Identifier for the configuration section"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update timestamp"
+        },
+        "updatedBy": {
+          "type": "string",
+          "description": "UID or email of editor"
+        }
+      },
+      "required": ["updatedAt"]
+    }
+  },
+  "firestore": {
+    "/prayerRequests/{requestId}": {
+      "schema": {
+        "$ref": "#/entities/PrayerRequest"
+      },
+      "description": "Collection of prayer petitions submitted to TGMC pastoral team."
+    },
+    "/contactMessages/{messageId}": {
+      "schema": {
+        "$ref": "#/entities/ContactMessage"
+      },
+      "description": "Collection of enquiries sent via website contact forms."
+    },
+    "/eventRsvps/{rsvpId}": {
+      "schema": {
+        "$ref": "#/entities/EventRSVP"
+      },
+      "description": "Collection of event registrations and worship attendance confirmations."
+    },
+    "/users/{userId}": {
+      "schema": {
+        "$ref": "#/entities/UserProfile"
+      },
+      "description": "User profiles for authenticated church members."
+    },
+    "/siteContent/{documentId}": {
+      "schema": {
+        "$ref": "#/entities/SiteContent"
+      },
+      "description": "Customizable church website content and image links."
+    }
+  }
+}

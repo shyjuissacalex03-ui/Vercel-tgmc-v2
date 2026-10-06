@@ -1,0 +1,8 @@
+{
+  "name": "The Great Mission Church (TGMC)",
+  "description": "Spirit-filled Malayali Pentecostal church in Uxbridge worshiping in English & Malayalam serving Watford, Harefield & Hillingdon.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

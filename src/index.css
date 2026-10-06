@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-serif: "Playfair Display", Georgia, Cambria, serif;
+  --color-primary: #478226;
+  --color-primary-dark: #39691e;
+  --color-gold: #ecb029;
+  --color-navy: #1f2530;
+  --color-navy-card: #282f3b;
+}
+
+body {
+  font-family: var(--font-sans);
+}
+
