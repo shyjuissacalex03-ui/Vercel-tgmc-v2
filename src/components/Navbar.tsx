@@ -40,7 +40,7 @@ export const Navbar: React.FC = () => {
   const [authModalMode, setAuthModalMode] = useState<"signin" | "signup">("signin");
   const [contentEditorOpen, setContentEditorOpen] = useState(false);
   const pathname = usePathname();
-  const { currentUser, signOut } = useAuth();
+  const { currentUser, signOut, isAdmin } = useAuth();
   const { content } = useContent();
   const churchInfo = content.churchInfo;
 
@@ -125,14 +125,16 @@ export const Navbar: React.FC = () => {
               {/* User Authentication in Top Bar */}
               {currentUser ? (
                 <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => setContentEditorOpen(true)}
-                    className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#478226] hover:bg-[#39691e] text-white text-[11px] font-bold transition-all shadow hover:scale-105 border border-emerald-400/30"
-                    title="Open CMS to edit content and upload images"
-                  >
-                    <Edit3 className="w-3 h-3 text-[#ecb029]" />
-                    <span>Edit Site & Images</span>
-                  </button>
+                  {isAdmin && (
+                    <button
+                      onClick={() => setContentEditorOpen(true)}
+                      className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#478226] hover:bg-[#39691e] text-white text-[11px] font-bold transition-all shadow hover:scale-105 border border-emerald-400/30"
+                      title="Admin CMS: Edit content and upload images"
+                    >
+                      <Edit3 className="w-3 h-3 text-[#ecb029]" />
+                      <span>Edit Site & Images</span>
+                    </button>
+                  )}
                   <button
                     onClick={() => setSubmissionsModalOpen(true)}
                     className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#282f3b] hover:bg-slate-700 text-[#ecb029] border border-[#ecb029]/30 text-[11px] font-semibold transition-colors"
@@ -220,7 +222,7 @@ export const Navbar: React.FC = () => {
 
             {/* Action Button & Mobile Hamburger */}
             <div className="flex items-center gap-2.5">
-              {currentUser ? (
+              {currentUser && isAdmin && (
                 <button
                   onClick={() => setContentEditorOpen(true)}
                   className="hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-bold bg-[#ecb029] hover:bg-[#d69d20] text-slate-950 shadow-md transition-all duration-200 hover:scale-105 active:scale-95"
@@ -228,18 +230,6 @@ export const Navbar: React.FC = () => {
                 >
                   <Edit3 className="w-3.5 h-3.5" />
                   <span>Edit Content</span>
-                </button>
-              ) : (
-                <button
-                  onClick={() => {
-                    setAuthModalMode("signin");
-                    setAuthModalOpen(true);
-                  }}
-                  className="hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors border border-slate-300"
-                  title="Sign in with Email/Password to edit content"
-                >
-                  <LogIn className="w-3.5 h-3.5 text-[#478226]" />
-                  <span>Login to Edit</span>
                 </button>
               )}
 
@@ -318,16 +308,18 @@ export const Navbar: React.FC = () => {
               {/* Mobile Auth and CMS actions */}
               {currentUser ? (
                 <div className="space-y-2 pt-2 border-t border-slate-700">
-                  <button
-                    onClick={() => {
-                      setMobileMenuOpen(false);
-                      setContentEditorOpen(true);
-                    }}
-                    className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-base font-bold text-slate-950 bg-[#ecb029] shadow-md"
-                  >
-                    <Edit3 className="w-5 h-5" />
-                    <span>Edit Site Content & Images</span>
-                  </button>
+                  {isAdmin && (
+                    <button
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        setContentEditorOpen(true);
+                      }}
+                      className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-base font-bold text-slate-950 bg-[#ecb029] shadow-md"
+                    >
+                      <Edit3 className="w-5 h-5" />
+                      <span>Edit Site Content & Images</span>
+                    </button>
+                  )}
                   <button
                     onClick={() => {
                       setMobileMenuOpen(false);
@@ -387,9 +379,9 @@ export const Navbar: React.FC = () => {
         )}
       </header>
 
-      {/* Floating Action Button for Content Editor */}
-      <div className="fixed bottom-6 right-6 z-40">
-        {currentUser ? (
+      {/* Floating Action Button for Content Editor - Admin Only */}
+      {currentUser && isAdmin && (
+        <div className="fixed bottom-6 right-6 z-40">
           <button
             onClick={() => setContentEditorOpen(true)}
             className="flex items-center gap-2.5 px-4 py-3 rounded-full bg-[#478226] hover:bg-[#39691e] text-white font-bold text-xs shadow-2xl transition-all duration-200 hover:scale-105 active:scale-95 border-2 border-white/25 group"
@@ -399,20 +391,8 @@ export const Navbar: React.FC = () => {
             <Edit3 className="w-4 h-4 text-[#ecb029]" />
             <span>Edit Content & Images</span>
           </button>
-        ) : (
-          <button
-            onClick={() => {
-              setAuthModalMode("signin");
-              setAuthModalOpen(true);
-            }}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#1f2530]/90 hover:bg-[#1f2530] text-slate-200 font-semibold text-xs shadow-xl backdrop-blur transition-all duration-200 hover:scale-105 active:scale-95 border border-slate-700"
-            title="Sign in with Email/Password to edit content and images"
-          >
-            <LogIn className="w-3.5 h-3.5 text-[#ecb029]" />
-            <span>Login to Edit Content</span>
-          </button>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* Auth Modal */}
       <AuthModal

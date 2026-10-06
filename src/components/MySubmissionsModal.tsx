@@ -17,7 +17,7 @@ export const MySubmissionsModal: React.FC<MySubmissionsModalProps> = ({
   onClose,
   onOpenEditor,
 }) => {
-  const { currentUser, signOut } = useAuth();
+  const { currentUser, signOut, isAdmin } = useAuth();
   const [activeTab, setActiveTab] = useState<"prayers" | "rsvps">("prayers");
   const [prayers, setPrayers] = useState<any[]>([]);
   const [rsvps, setRsvps] = useState<any[]>([]);
@@ -88,7 +88,7 @@ export const MySubmissionsModal: React.FC<MySubmissionsModalProps> = ({
             </div>
           </div>
           <div className="flex items-center gap-2">
-            {onOpenEditor && (
+            {isAdmin && onOpenEditor && (
               <button
                 onClick={onOpenEditor}
                 className="px-3 py-1.5 rounded-lg text-xs font-bold text-white bg-[#478226] hover:bg-[#39691e] flex items-center gap-1.5 shadow-sm transition-all"

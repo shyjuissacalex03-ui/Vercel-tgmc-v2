@@ -13,8 +13,13 @@ import {
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { auth, db } from "./config.ts";
 
-// Configured admin email from runtime instructions
+// Configured admin email from runtime instructions: Only this email has administrator access
 export const ADMIN_EMAIL = "shyjuissacalex03@gmail.com";
+
+export function isUserAdminEmail(email?: string | null): boolean {
+  if (!email) return false;
+  return email.toLowerCase().trim() === ADMIN_EMAIL.toLowerCase().trim();
+}
 
 interface AuthContextType {
   currentUser: User | null;
@@ -50,21 +55,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setCurrentUser(user);
 
       if (user) {
-        const userEmail = (user.email || "").toLowerCase().trim();
-        const isMasterAdmin = userEmail === ADMIN_EMAIL.toLowerCase();
-
-        // Also check if admin doc exists
-        let hasAdminDoc = false;
-        try {
-          const adminDoc = await getDoc(doc(db, "admins", user.uid));
-          if (adminDoc.exists()) {
-            hasAdminDoc = true;
-          }
-        } catch {
-          // ignore error for non-admins
-        }
-
-        const adminStatus = isMasterAdmin || hasAdminDoc;
+        // Requirement 1 & 7: Only the email shyjuissacalex03@gmail.com should have administrator access
+        const adminStatus = isUserAdminEmail(user.email);
         setIsAdmin(adminStatus);
 
         // Sync user profile to Firestore
@@ -77,12 +69,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
               email: user.email || "",
               photoURL: user.photoURL || "",
               isAdmin: adminStatus,
+              role: adminStatus ? "Administrator" : "Member",
               createdAt: new Date().toISOString(),
             },
             { merge: true }
           );
 
-          if (isMasterAdmin) {
+          if (adminStatus) {
             // Ensure record in admins collection
             await setDoc(
               doc(db, "admins", user.uid),

@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { doc, onSnapshot, setDoc } from "firebase/firestore";
 import { db, auth } from "./config.ts";
+import { isUserAdminEmail } from "./authContext.tsx";
 import { handleFirestoreError, OperationType } from "./errorHandler.ts";
 import {
   churchInfo as defaultChurchInfo,
@@ -94,12 +95,17 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
   }, []);
 
   const saveContent = async (updated: Partial<ChurchContentState>) => {
+    // Requirements 2 & 9: Only administrators can save or publish changes to Firestore
+    if (!auth.currentUser || !isUserAdminEmail(auth.currentUser.email)) {
+      throw new Error("You do not have permission to edit website content.");
+    }
+
     const docRef = doc(db, "siteContent", "main");
     const merged = {
       ...content,
       ...updated,
       updatedAt: new Date().toISOString(),
-      updatedBy: auth.currentUser?.email || "admin",
+      updatedBy: auth.currentUser?.email || "shyjuissacalex03@gmail.com",
     };
 
     try {
@@ -111,12 +117,17 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
   };
 
   const resetToDefaults = async () => {
+    // Requirements 2 & 9: Only administrators can modify Firestore siteContent
+    if (!auth.currentUser || !isUserAdminEmail(auth.currentUser.email)) {
+      throw new Error("You do not have permission to edit website content.");
+    }
+
     const docRef = doc(db, "siteContent", "main");
     try {
       await setDoc(docRef, {
         ...defaultContent,
         updatedAt: new Date().toISOString(),
-        updatedBy: auth.currentUser?.email || "admin",
+        updatedBy: auth.currentUser?.email || "shyjuissacalex03@gmail.com",
       });
       setContent(defaultContent);
     } catch (err) {

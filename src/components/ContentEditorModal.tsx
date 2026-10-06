@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useContent } from "../firebase/contentContext.tsx";
-import { useAuth } from "../firebase/authContext.tsx";
+import { useAuth, ADMIN_EMAIL } from "../firebase/authContext.tsx";
 import { uploadChurchAsset } from "../firebase/storageService.ts";
 import {
   X,
@@ -20,6 +20,7 @@ import {
   Sparkles,
   CreditCard,
   Eye,
+  ShieldAlert,
 } from "lucide-react";
 
 interface ContentEditorModalProps {
@@ -53,6 +54,41 @@ export const ContentEditorModal: React.FC<ContentEditorModalProps> = ({ isOpen, 
   }, [isOpen, content]);
 
   if (!isOpen) return null;
+
+  // Requirement 5: If a non-admin user tries to access the CMS, show:
+  // "You do not have permission to edit website content."
+  if (!isAdmin) {
+    return (
+      <div
+        className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-200"
+        onClick={onClose}
+      >
+        <div
+          className="relative max-w-md w-full bg-white rounded-3xl p-6 sm:p-8 shadow-2xl text-center space-y-4"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="w-14 h-14 rounded-2xl bg-rose-50 border border-rose-200 text-rose-600 flex items-center justify-center mx-auto">
+            <ShieldAlert className="w-7 h-7" />
+          </div>
+          <h3 className="text-xl font-bold text-[#282f3b]">Access Denied</h3>
+          <p className="text-sm font-bold text-rose-600">
+            You do not have permission to edit website content.
+          </p>
+          <p className="text-xs text-slate-500 leading-relaxed">
+            Only the administrator ({ADMIN_EMAIL}) has permission to edit church content, upload images, and publish changes.
+          </p>
+          <div className="pt-2">
+            <button
+              onClick={onClose}
+              className="w-full py-2.5 rounded-xl bg-[#282f3b] hover:bg-slate-800 text-white font-bold text-xs transition-colors"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   // Handle generic image upload to Firebase Storage
   const handleImageUpload = async (

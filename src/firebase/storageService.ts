@@ -4,6 +4,7 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { storage, auth } from "./config.ts";
+import { isUserAdminEmail } from "./authContext.tsx";
 
 export interface UploadProgressCallback {
   (percentage: number): void;
@@ -12,6 +13,7 @@ export interface UploadProgressCallback {
 /**
  * Uploads a file to Firebase Storage under the specified directory path.
  * Returns the public download URL once upload is complete.
+ * RESTRICTED: Administrators only (shyjuissacalex03@gmail.com).
  */
 export async function uploadChurchAsset(
   file: File,
@@ -22,9 +24,9 @@ export async function uploadChurchAsset(
     throw new Error("No file provided for upload.");
   }
 
-  // Validate authentication before storage operation
-  if (!auth.currentUser) {
-    throw new Error("You must be signed in with an email account or Google to upload files to Firebase Storage.");
+  // Requirement 8: Restrict Firebase Storage uploads to administrators only
+  if (!auth.currentUser || !isUserAdminEmail(auth.currentUser.email)) {
+    throw new Error("You do not have permission to upload images. Only the administrator (shyjuissacalex03@gmail.com) can upload media.");
   }
 
   // Sanitize filename
