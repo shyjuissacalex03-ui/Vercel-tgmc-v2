@@ -117,68 +117,84 @@ export const EventsPage: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {serviceSchedules.map((schedule) => (
-              <div
-                key={schedule.id}
-                className="p-6 rounded-2xl bg-white border border-slate-200 flex flex-col justify-between space-y-4 shadow-md hover:shadow-xl transition-all"
-              >
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="px-3 py-1 rounded-full bg-[#478226]/10 text-[#478226] text-xs font-bold border border-[#478226]/20">
-                      {schedule.day}
-                    </span>
-                    {schedule.isLiveStreamed && (
-                      <span className="flex items-center gap-1 text-[10px] text-red-600 font-bold bg-red-50 px-2 py-0.5 rounded border border-red-200">
-                        <Radio className="w-3 h-3 animate-pulse" />
-                        <span>LIVE</span>
+            {serviceSchedules.map((schedule, idx) => {
+              const isDarkHighlight =
+                idx === 2 ||
+                schedule.id === "fasting-prayer-communion" ||
+                schedule.title.toLowerCase().includes("fasting");
+
+              return isDarkHighlight ? (
+                <div
+                  key={schedule.id || idx}
+                  className="p-6 rounded-2xl bg-[#1f2530] text-white flex flex-col justify-between space-y-4 shadow-xl hover:shadow-2xl transition-all"
+                >
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="px-3 py-1 rounded-full bg-[#ecb029]/20 text-[#ecb029] text-xs font-bold border border-[#ecb029]/30">
+                        {schedule.day}
                       </span>
-                    )}
+                      {schedule.isLiveStreamed ? (
+                        <span className="flex items-center gap-1 text-[10px] text-red-400 font-bold bg-red-950/60 px-2 py-0.5 rounded border border-red-500/30">
+                          <Radio className="w-3 h-3 animate-pulse" />
+                          <span>LIVE</span>
+                        </span>
+                      ) : (
+                        <span className="text-[10px] text-emerald-400 font-semibold bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-500/30">
+                          {schedule.language || "All Believers"}
+                        </span>
+                      )}
+                    </div>
+                    <h3 className="font-bold text-white text-base">{schedule.title}</h3>
+                    <p className="text-xs text-slate-300 leading-relaxed">
+                      {schedule.description}
+                    </p>
                   </div>
-                  <h3 className="font-bold text-[#282f3b] text-base">{schedule.title}</h3>
-                  <p className="text-xs text-slate-600 leading-relaxed">{schedule.description}</p>
-                </div>
 
-                <div className="pt-4 border-t border-slate-200 space-y-1.5 text-xs text-slate-700">
-                  <div className="flex items-center gap-1.5 text-[#478226] font-bold">
-                    <Clock className="w-3.5 h-3.5" />
-                    <span>{schedule.time}</span>
-                  </div>
-                  <div className="flex items-center gap-1.5 text-slate-500">
-                    <MapPin className="w-3.5 h-3.5 text-[#478226] shrink-0" />
-                    <span className="truncate">{schedule.location}</span>
+                  <div className="pt-4 border-t border-slate-700 space-y-1.5 text-xs text-slate-300">
+                    <div className="flex items-center gap-1.5 text-[#ecb029] font-bold">
+                      <Clock className="w-3.5 h-3.5" />
+                      <span>{schedule.time}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 text-slate-400">
+                      <MapPin className="w-3.5 h-3.5 text-[#ecb029] shrink-0" />
+                      <span>{schedule.location}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ) : (
+                <div
+                  key={schedule.id || idx}
+                  className="p-6 rounded-2xl bg-white border border-slate-200 flex flex-col justify-between space-y-4 shadow-md hover:shadow-xl transition-all"
+                >
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="px-3 py-1 rounded-full bg-[#478226]/10 text-[#478226] text-xs font-bold border border-[#478226]/20">
+                        {schedule.day}
+                      </span>
+                      {schedule.isLiveStreamed && (
+                        <span className="flex items-center gap-1 text-[10px] text-red-600 font-bold bg-red-50 px-2 py-0.5 rounded border border-red-200">
+                          <Radio className="w-3 h-3 animate-pulse" />
+                          <span>LIVE</span>
+                        </span>
+                      )}
+                    </div>
+                    <h3 className="font-bold text-[#282f3b] text-base">{schedule.title}</h3>
+                    <p className="text-xs text-slate-600 leading-relaxed">{schedule.description}</p>
+                  </div>
 
-            {/* Third Schedule Highlight */}
-            <div className="p-6 rounded-2xl bg-[#1f2530] text-white flex flex-col justify-between space-y-4 shadow-xl">
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="px-3 py-1 rounded-full bg-[#ecb029]/20 text-[#ecb029] text-xs font-bold border border-[#ecb029]/30">
-                    Monthly
-                  </span>
-                  <span className="text-[10px] text-emerald-400 font-semibold bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-500/30">
-                    All Believers
-                  </span>
+                  <div className="pt-4 border-t border-slate-200 space-y-1.5 text-xs text-slate-700">
+                    <div className="flex items-center gap-1.5 text-[#478226] font-bold">
+                      <Clock className="w-3.5 h-3.5" />
+                      <span>{schedule.time}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 text-slate-500">
+                      <MapPin className="w-3.5 h-3.5 text-[#478226] shrink-0" />
+                      <span className="truncate">{schedule.location}</span>
+                    </div>
+                  </div>
                 </div>
-                <h3 className="font-bold text-white text-base">Fasting Prayer & Communion</h3>
-                <p className="text-xs text-slate-300 leading-relaxed">
-                  Monthly consecrated fasting prayer for revival, healings, community outreach, and kingdom breakthrough in West London.
-                </p>
-              </div>
-
-              <div className="pt-4 border-t border-slate-700 space-y-1.5 text-xs text-slate-300">
-                <div className="flex items-center gap-1.5 text-[#ecb029] font-bold">
-                  <Clock className="w-3.5 h-3.5" />
-                  <span>First Saturday of Every Month</span>
-                </div>
-                <div className="flex items-center gap-1.5 text-slate-400">
-                  <MapPin className="w-3.5 h-3.5 text-[#ecb029] shrink-0" />
-                  <span>150 York Rd, Uxbridge, UB8 1QW</span>
-                </div>
-              </div>
-            </div>
+              );
+            })}
           </div>
         </div>
       </section>

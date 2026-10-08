@@ -1513,9 +1513,14 @@ export const ContentEditorModal: React.FC<ContentEditorModalProps> = ({
                     className="p-5 rounded-2xl bg-[#f0f3f9] border border-slate-200 space-y-3"
                   >
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-[#478226]">
-                        Schedule Item #{idx + 1}
-                      </span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-bold text-[#478226]">
+                          Schedule #{idx + 1}
+                        </span>
+                        <span className="text-xs font-semibold text-[#282f3b]">
+                          · {sched.title}
+                        </span>
+                      </div>
                       <button
                         type="button"
                         onClick={() => {
@@ -1612,21 +1617,40 @@ export const ContentEditorModal: React.FC<ContentEditorModalProps> = ({
                       </div>
                       <div>
                         <label className="block text-[11px] font-bold text-[#282f3b] mb-1">
-                          Languages
+                          Languages / Audience
                         </label>
-                        <input
-                          type="text"
-                          value={sched.language}
-                          onChange={(e) => {
-                            const updated = [...formData.serviceSchedules];
-                            updated[idx].language = e.target.value;
-                            setFormData({
-                              ...formData,
-                              serviceSchedules: updated,
-                            });
-                          }}
-                          className="w-full px-3 py-1.5 rounded-lg bg-white border border-slate-300 text-xs text-[#282f3b]"
-                        />
+                        <div className="flex items-center gap-2">
+                          <input
+                            type="text"
+                            value={sched.language}
+                            onChange={(e) => {
+                              const updated = [...formData.serviceSchedules];
+                              updated[idx].language = e.target.value;
+                              setFormData({
+                                ...formData,
+                                serviceSchedules: updated,
+                              });
+                            }}
+                            placeholder="e.g. All Believers, Malayalam & English"
+                            className="flex-1 px-3 py-1.5 rounded-lg bg-white border border-slate-300 text-xs text-[#282f3b]"
+                          />
+                          <label className="flex items-center gap-1.5 text-[11px] font-bold text-slate-700 cursor-pointer bg-white px-2.5 py-1.5 rounded-lg border border-slate-300 whitespace-nowrap">
+                            <input
+                              type="checkbox"
+                              checked={sched.isLiveStreamed}
+                              onChange={(e) => {
+                                const updated = [...formData.serviceSchedules];
+                                updated[idx].isLiveStreamed = e.target.checked;
+                                setFormData({
+                                  ...formData,
+                                  serviceSchedules: updated,
+                                });
+                              }}
+                              className="w-3.5 h-3.5 rounded text-[#478226]"
+                            />
+                            <span>Live Streamed</span>
+                          </label>
+                        </div>
                       </div>
                     </div>
 

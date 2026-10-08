@@ -95,7 +95,23 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
             pastorInfo: data.pastorInfo || defaultContent.pastorInfo,
             corePillars: data.corePillars || defaultContent.corePillars,
             heroSlides: data.heroSlides || defaultContent.heroSlides,
-            serviceSchedules: data.serviceSchedules || defaultContent.serviceSchedules,
+            serviceSchedules: (() => {
+              if (!data.serviceSchedules || !Array.isArray(data.serviceSchedules) || data.serviceSchedules.length === 0) {
+                return defaultContent.serviceSchedules;
+              }
+              const hasFasting = data.serviceSchedules.some(
+                (s: any) => s.id === "fasting-prayer-communion" || s.title?.toLowerCase().includes("fasting")
+              );
+              if (!hasFasting) {
+                const fastingDefault = defaultContent.serviceSchedules.find(
+                  (s) => s.id === "fasting-prayer-communion"
+                );
+                if (fastingDefault) {
+                  return [...data.serviceSchedules, fastingDefault];
+                }
+              }
+              return data.serviceSchedules;
+            })(),
             upcomingEvents: data.upcomingEvents || defaultContent.upcomingEvents,
             galleryItems: data.galleryItems || defaultContent.galleryItems,
             statementsOfFaith: data.statementsOfFaith || defaultContent.statementsOfFaith,

@@ -334,6 +334,17 @@ export const serviceSchedules: ServiceSchedule[] = [
     location: "150 York Rd, Uxbridge, UB8 1QW",
     isLiveStreamed: true,
   },
+  {
+    id: "fasting-prayer-communion",
+    day: "First Saturday of Every Month",
+    time: "10:00 AM - 1:00 PM",
+    title: "Fasting Prayer & Communion",
+    language: "All Believers",
+    description:
+      "Monthly consecrated fasting prayer for revival, healings, community outreach, and kingdom breakthrough in West London.",
+    location: "150 York Rd, Uxbridge, UB8 1QW",
+    isLiveStreamed: false,
+  },
 ];
 
 export const statementsOfFaith: StatementOfFaith[] = [
