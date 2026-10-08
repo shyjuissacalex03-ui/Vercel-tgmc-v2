@@ -1743,7 +1743,7 @@ export const ContentEditorModal: React.FC<ContentEditorModalProps> = ({
                                 serviceSchedules: updated,
                               });
                             }}
-                            placeholder="e.g. All Believers, Malayalam & English"
+                            placeholder="e.g. All Believersl, Malayalam & English"
                             className="flex-1 px-3 py-1.5 rounded-lg bg-white border border-slate-300 text-xs text-[#282f3b]"
                           />
                           <label className="flex items-center gap-1.5 text-[11px] font-bold text-slate-700 cursor-pointer bg-white px-2.5 py-1.5 rounded-lg border border-slate-300 whitespace-nowrap">

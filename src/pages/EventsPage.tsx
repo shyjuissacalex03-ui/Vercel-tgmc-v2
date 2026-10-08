@@ -328,7 +328,7 @@ export const EventsPage: React.FC = () => {
                     day: "Every Saturday",
                     time: "6:30 PM - 8:30 PM",
                     title: "Special Gathering",
-                    language: "All Believers",
+                    language: "All Believersr",
                     description: "Weekly fellowship, intercession, and fellowship.",
                     location: "150 York Rd, Uxbridge, UB8 1QW",
                     isLiveStreamed: false,
@@ -420,7 +420,7 @@ export const EventsPage: React.FC = () => {
                       day: "First Saturday of Every Month",
                       time: "4:00 PM - 6:00 PM",
                       title: "Sunday Services",
-                      language: "All Believers",
+                      language: "All Believersm",
                       description:
                         "Monthly consecrated fasting prayer for revival, healings, community outreach, and kingdom breakthrough in West London.",
                       location: "150 York Rd, Uxbridge, UB8 1QW",
@@ -468,7 +468,7 @@ export const EventsPage: React.FC = () => {
                         </span>
                       ) : (
                         <span className="text-[10px] text-emerald-400 font-semibold bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-500/30">
-                          {schedule.language || "All Believers"}
+                          {schedule.language || "All Believersv"}
                         </span>
                       )}
                     </div>
@@ -911,7 +911,7 @@ export const EventsPage: React.FC = () => {
                       setEditingSchedule({ ...editingSchedule, language: e.target.value })
                     }
                     className="w-full px-3.5 py-2.5 rounded-xl bg-[#f0f3f9] border border-slate-300 text-xs text-[#282f3b] focus:outline-none focus:border-[#478226]"
-                    placeholder="e.g. All Believers, Malayalam & English"
+                    placeholder="e.g. All Believersp, Malayalam & English"
                   />
                 </div>
               </div>
