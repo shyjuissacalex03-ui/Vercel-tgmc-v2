@@ -336,8 +336,8 @@ export const serviceSchedules: ServiceSchedule[] = [
   },
   {
     id: "fasting-prayer-communion",
-    day: "First Saturday of Every Month",
-    time: "10:00 AM - 1:00 PM",
+    day: "Sunday Services",
+    time: "4:00 PM - 6:00 PM",
     title: "Fasting Prayer & Communion",
     language: "All Believers",
     description:
