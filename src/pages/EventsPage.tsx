@@ -418,8 +418,8 @@ export const EventsPage: React.FC = () => {
                     const newSched: ServiceSchedule = {
                       id: `sched-${Date.now()}`,
                       day: "First Saturday of Every Month",
-                      time: "10:00 AM - 1:00 PM",
-                      title: "Fasting Prayer & Communion",
+                      time: "4:00 PM - 6:00 PM",
+                      title: "Sunday Services",
                       language: "All Believers",
                       description:
                         "Monthly consecrated fasting prayer for revival, healings, community outreach, and kingdom breakthrough in West London.",
