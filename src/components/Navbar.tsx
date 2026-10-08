@@ -6,7 +6,7 @@ import { FacebookIcon, InstagramIcon, YoutubeIcon } from "./SocialIcons.tsx";
 import { useAuth } from "../firebase/authContext.tsx";
 import { MySubmissionsModal } from "./MySubmissionsModal.tsx";
 import { AuthModal } from "./AuthModal.tsx";
-import { ContentEditorModal } from "./ContentEditorModal.tsx";
+import { ContentEditorModal, ContentEditorTabType } from "./ContentEditorModal.tsx";
 import {
   MapPin,
   Mail,
@@ -39,6 +39,7 @@ export const Navbar: React.FC = () => {
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authModalMode, setAuthModalMode] = useState<"signin" | "signup">("signin");
   const [contentEditorOpen, setContentEditorOpen] = useState(false);
+  const [editorInitialTab, setEditorInitialTab] = useState<ContentEditorTabType>("home");
   const pathname = usePathname();
   const { currentUser, signOut, isAdmin } = useAuth();
   const { content } = useContent();
@@ -50,6 +51,17 @@ export const Navbar: React.FC = () => {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const handleOpenEditor = (e: any) => {
+      if (e?.detail?.tab) {
+        setEditorInitialTab(e.detail.tab);
+      }
+      setContentEditorOpen(true);
+    };
+    window.addEventListener("open-cms-editor", handleOpenEditor);
+    return () => window.removeEventListener("open-cms-editor", handleOpenEditor);
   }, []);
 
   return (
@@ -405,6 +417,7 @@ export const Navbar: React.FC = () => {
       <ContentEditorModal
         isOpen={contentEditorOpen}
         onClose={() => setContentEditorOpen(false)}
+        initialTab={editorInitialTab}
       />
 
       {/* Submissions Modal */}

@@ -43,12 +43,7 @@ import {
   Tv,
 } from "lucide-react";
 
-interface ContentEditorModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-type TabType =
+export type ContentEditorTabType =
   | "home"
   | "about"
   | "pastor"
@@ -57,14 +52,21 @@ type TabType =
   | "contact"
   | "branding";
 
+interface ContentEditorModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  initialTab?: ContentEditorTabType;
+}
+
 export const ContentEditorModal: React.FC<ContentEditorModalProps> = ({
   isOpen,
   onClose,
+  initialTab = "home",
 }) => {
   const { content, saveContent, resetToDefaults } = useContent();
   const { currentUser, isAdmin } = useAuth();
 
-  const [activeTab, setActiveTab] = useState<TabType>("home");
+  const [activeTab, setActiveTab] = useState<ContentEditorTabType>(initialTab);
 
   // Local draft state initialized with complete fallbacks
   const [formData, setFormData] = useState<ChurchContentState>({
@@ -96,6 +98,9 @@ export const ContentEditorModal: React.FC<ContentEditorModalProps> = ({
   // Sync draft when opened
   useEffect(() => {
     if (isOpen) {
+      if (initialTab) {
+        setActiveTab(initialTab);
+      }
       setFormData({
         ...content,
         homeContent: content.homeContent || defaultHomeContent,
@@ -1465,19 +1470,126 @@ export const ContentEditorModal: React.FC<ContentEditorModalProps> = ({
             <div className="space-y-8 max-w-4xl">
               <div>
                 <h3 className="font-bold text-lg text-[#282f3b]">
-                  Events & Weekly Services Editor
+                  Events & Services Page Editor
                 </h3>
                 <p className="text-xs text-slate-500">
-                  Manage weekly worship schedule, upcoming special services,
-                  banners, categories, and calendar embeddings.
+                  Fully edit the event page hero banner, weekly gathering schedule, Google Calendar embed, and upcoming church events.
                 </p>
               </div>
 
-              {/* 5.1 Weekly Schedule Editor */}
+              {/* 5.1 Event Page Hero Banner */}
+              <div className="p-6 rounded-2xl bg-[#f0f3f9] border border-slate-200 space-y-4">
+                <h4 className="text-sm font-bold text-[#282f3b]">
+                  1. Event Page Hero Header Banner
+                </h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-bold text-[#282f3b] mb-1">
+                      Hero Badge
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.eventsContent?.heroBadge || ""}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          eventsContent: {
+                            ...formData.eventsContent,
+                            heroBadge: e.target.value,
+                          },
+                        })
+                      }
+                      className="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-xs text-[#282f3b]"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-[#282f3b] mb-1">
+                      Main Page Heading
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.eventsContent?.heroTitle || ""}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          eventsContent: {
+                            ...formData.eventsContent,
+                            heroTitle: e.target.value,
+                          },
+                        })
+                      }
+                      className="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-xs text-[#282f3b]"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-[#282f3b] mb-1">
+                    Hero Subtitle
+                  </label>
+                  <textarea
+                    rows={2}
+                    value={formData.eventsContent?.heroSubtitle || ""}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        eventsContent: {
+                          ...formData.eventsContent,
+                          heroSubtitle: e.target.value,
+                        },
+                      })
+                    }
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-xs text-[#282f3b]"
+                  />
+                </div>
+              </div>
+
+              {/* 5.2 Weekly Schedule Editor */}
               <div className="space-y-4">
+                <div className="p-4 rounded-xl bg-[#f0f3f9] border border-slate-200 grid grid-cols-1 sm:grid-cols-2 gap-3 mb-2">
+                  <div>
+                    <label className="block text-[11px] font-bold text-[#282f3b] mb-1">
+                      Weekly Schedule Section Title
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.eventsContent?.scheduleTitle || ""}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          eventsContent: {
+                            ...formData.eventsContent,
+                            scheduleTitle: e.target.value,
+                          },
+                        })
+                      }
+                      className="w-full px-3 py-1.5 rounded-lg bg-white border border-slate-300 text-xs text-[#282f3b]"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-[#282f3b] mb-1">
+                      Weekly Schedule Section Subtitle
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.eventsContent?.scheduleSubtitle || ""}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          eventsContent: {
+                            ...formData.eventsContent,
+                            scheduleSubtitle: e.target.value,
+                          },
+                        })
+                      }
+                      className="w-full px-3 py-1.5 rounded-lg bg-white border border-slate-300 text-xs text-[#282f3b]"
+                    />
+                  </div>
+                </div>
+
                 <div className="flex items-center justify-between">
                   <h4 className="text-sm font-bold text-[#282f3b]">
-                    1. Weekly Gathering Schedule ({formData.serviceSchedules.length})
+                    2. Weekly Gathering Schedule Items ({formData.serviceSchedules.length})
                   </h4>
                   <button
                     type="button"
@@ -1676,11 +1788,123 @@ export const ContentEditorModal: React.FC<ContentEditorModalProps> = ({
                 ))}
               </div>
 
-              {/* 5.2 Upcoming Events */}
+              {/* 5.3 Google Calendar Embed Settings */}
+              <div className="p-6 rounded-2xl bg-[#f0f3f9] border border-slate-200 space-y-4">
+                <h4 className="text-sm font-bold text-[#282f3b]">
+                  3. Interactive Google Calendar Settings
+                </h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-bold text-[#282f3b] mb-1">
+                      Calendar Badge / Subtitle
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.eventsContent?.calendarSubtitle || ""}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          eventsContent: {
+                            ...formData.eventsContent,
+                            calendarSubtitle: e.target.value,
+                          },
+                        })
+                      }
+                      className="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-xs text-[#282f3b]"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-[#282f3b] mb-1">
+                      Calendar Section Title
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.eventsContent?.calendarTitle || ""}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          eventsContent: {
+                            ...formData.eventsContent,
+                            calendarTitle: e.target.value,
+                          },
+                        })
+                      }
+                      className="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-xs text-[#282f3b]"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-[#282f3b] mb-1">
+                    Google Calendar Embed URL (or shareable link)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.eventsContent?.calendarEmbedUrl || ""}
+                    placeholder="https://calendar.google.com/calendar/u/0/embed?..."
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        eventsContent: {
+                          ...formData.eventsContent,
+                          calendarEmbedUrl: e.target.value,
+                        },
+                      })
+                    }
+                    className="w-full px-3 py-2 rounded-xl bg-white border border-slate-300 text-xs text-[#282f3b]"
+                  />
+                  <p className="text-[11px] text-slate-500 mt-1">
+                    Visitors can interact with your schedule directly or click to open Google Calendar in full screen.
+                  </p>
+                </div>
+              </div>
+
+              {/* 5.4 Upcoming Events */}
               <div className="space-y-4">
+                <div className="p-4 rounded-xl bg-[#f0f3f9] border border-slate-200 grid grid-cols-1 sm:grid-cols-2 gap-3 mb-2">
+                  <div>
+                    <label className="block text-[11px] font-bold text-[#282f3b] mb-1">
+                      Upcoming Events Section Title
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.eventsContent?.eventsListTitle || ""}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          eventsContent: {
+                            ...formData.eventsContent,
+                            eventsListTitle: e.target.value,
+                          },
+                        })
+                      }
+                      className="w-full px-3 py-1.5 rounded-lg bg-white border border-slate-300 text-xs text-[#282f3b]"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-[#282f3b] mb-1">
+                      Upcoming Events Section Subtitle
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.eventsContent?.eventsListSubtitle || ""}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          eventsContent: {
+                            ...formData.eventsContent,
+                            eventsListSubtitle: e.target.value,
+                          },
+                        })
+                      }
+                      className="w-full px-3 py-1.5 rounded-lg bg-white border border-slate-300 text-xs text-[#282f3b]"
+                    />
+                  </div>
+                </div>
+
                 <div className="flex items-center justify-between">
                   <h4 className="text-sm font-bold text-[#282f3b]">
-                    2. Upcoming Church Events ({formData.upcomingEvents.length})
+                    4. Upcoming Church Events List ({formData.upcomingEvents.length})
                   </h4>
                   <button
                     type="button"

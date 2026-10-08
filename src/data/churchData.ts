@@ -290,9 +290,9 @@ export const defaultEventsContent: EventsPageContent = {
   scheduleSubtitle: "Regular services held at our Uxbridge worship facility and streamed online.",
   eventsListTitle: "Upcoming Church Events",
   eventsListSubtitle: "Mark your calendar for special services, seasonal conferences, and community gatherings.",
-  calendarTitle: "Church Calendar",
-  calendarSubtitle: "Keep track of all upcoming ministry dates and times.",
-  calendarEmbedUrl: "",
+  calendarTitle: "Official TGMC Google Calendar",
+  calendarSubtitle: "Interactive Schedule",
+  calendarEmbedUrl: "https://calendar.google.com/calendar/u/0/newembed?height=600&wkst=1&ctz=Europe/London&showPrint=0&showTabs=0&showTz=0&showCalendars=0&hl=en_GB&src=dGdtY2h1cmNodWtAZ21haWwuY29t&color=%23039be5",
 };
 
 export const defaultContactContent: ContactPageContent = {
