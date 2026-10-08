@@ -847,7 +847,7 @@ export const EventsPage: React.FC = () => {
                     setEditingSchedule({ ...editingSchedule, title: e.target.value })
                   }
                   className="w-full px-3.5 py-2.5 rounded-xl bg-[#f0f3f9] border border-slate-300 text-xs text-[#282f3b] font-semibold focus:outline-none focus:border-[#478226]"
-                  placeholder="e.g. Fasting Prayer & Communion"
+                  placeholder="e.g. Fasting Prayers & Communion"
                 />
               </div>
 
