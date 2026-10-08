@@ -14,6 +14,11 @@ import {
 export const StatementOfFaithPage: React.FC = () => {
   const { content } = useContent();
   const statementsOfFaith = content.statementsOfFaith || defaultStatementsOfFaith;
+  const statementHero = content.statementOfFaithHero || {
+    heroBadge: "Apostolic & Biblical Doctrine",
+    heroTitle: "Statement of Faith",
+    heroSubtitle: "Our core doctrinal convictions, standing firmly on the unchanging truth of Scripture for salvation, worship, and Spirit-filled living.",
+  };
 
   // First item open by default
   const [openItems, setOpenItems] = useState<Record<string, boolean>>({
@@ -43,13 +48,13 @@ export const StatementOfFaithPage: React.FC = () => {
       <section className="relative py-20 bg-slate-900 border-b border-slate-800 text-center space-y-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-semibold uppercase tracking-wider">
-            Apostolic & Biblical Doctrine
+            {statementHero.heroBadge || "Apostolic & Biblical Doctrine"}
           </div>
           <h1 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
-            Statement of Faith
+            {statementHero.heroTitle || "Statement of Faith"}
           </h1>
           <p className="text-slate-300 text-base max-w-2xl mx-auto leading-relaxed">
-            Our core doctrinal convictions, standing firmly on the unchanging truth of Scripture for salvation, worship, and Spirit-filled living.
+            {statementHero.heroSubtitle || "Our core doctrinal convictions, standing firmly on the unchanging truth of Scripture for salvation, worship, and Spirit-filled living."}
           </p>
           <div className="pt-2 flex justify-center gap-3 text-xs">
             <button

@@ -46,6 +46,22 @@ export const HomePage: React.FC = () => {
   const upcomingEvents = content.upcomingEvents || defaultUpcomingEvents;
   const corePillars = content.corePillars || defaultCorePillars;
   const heroSlides = content.heroSlides || defaultHeroSlides;
+  const homeContent = content.homeContent || {
+    introBadge: "Welcome to",
+    introTitle: "The Great Mission Church",
+    introParagraph1: "We are a Bible-believing, Spirit-filled, CHRIST-centred, and mission-driven church passionate about living out the Gospel. Our desire is to glorify GOD, walk in the power of the Holy Spirit, and reach people everywhere with the love and truth of JESUS CHRIST.",
+    introParagraph2: "Based in Uxbridge, we welcome all believers and seekers to join our worship services conducted in Malayalam and English.",
+    introImage: "/images/pastor-begin-alex.jpg",
+    liveStreamTitle: "The Great Mission Church Live Stream!",
+    liveStreamSubtitle: "Experience the presence of GOD right where you are through our live worship services. Every message, song, and prayer is centered on JESUS CHRIST — inspiring faith, renewing hope, and strengthening your walk with GOD.",
+    liveStreamUrl: "https://www.youtube.com/@tgmcuk",
+    liveStreamPreviewImage: "/images/livestream-preview.png",
+    quickWorshipTitle: "Sunday Worship",
+    quickWorshipTime: "10:00 AM - 1:00 PM",
+    quickWorshipLocation: "150 York Rd, Uxbridge, Hillingdon, UB8 1QW",
+    testimonialsTitle: "Voices of Our Community",
+    testimonialsSubtitle: "Hear how God is moving in the lives of our church family and visitors.",
+  };
 
   const [currentSlide, setCurrentSlide] = useState(0);
   const [videoModalOpen, setVideoModalOpen] = useState(false);
@@ -340,14 +356,14 @@ export const HomePage: React.FC = () => {
                   <span>Live Worship Broadcast</span>
                 </div>
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white">
-                  The Great Mission Church Live Stream!
+                  {homeContent.liveStreamTitle || "The Great Mission Church Live Stream!"}
                 </h2>
                 <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-xl">
-                  Experience the presence of GOD right where you are through our live worship services. Every message, song, and prayer is centered on JESUS CHRIST — inspiring faith, renewing hope, and strengthening your walk with GOD.
+                  {homeContent.liveStreamSubtitle || "Experience the presence of GOD right where you are through our live worship services. Every message, song, and prayer is centered on JESUS CHRIST — inspiring faith, renewing hope, and strengthening your walk with GOD."}
                 </p>
                 <div className="flex flex-wrap items-center gap-4 pt-2">
                   <a
-                    href="https://www.youtube.com/@tgmcuk"
+                    href={homeContent.liveStreamUrl || "https://www.youtube.com/@tgmcuk"}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="px-6 py-3 rounded-lg bg-red-600 hover:bg-red-500 text-white font-bold text-sm shadow-lg transition-all flex items-center gap-2"
@@ -373,7 +389,7 @@ export const HomePage: React.FC = () => {
                   className="relative rounded-2xl overflow-hidden border border-white/20 shadow-2xl cursor-pointer group h-64 w-full"
                 >
                   <OptimizedImage
-                    src="/images/livestream-preview.png"
+                    src={homeContent.liveStreamPreviewImage || "/images/livestream-preview.png"}
                     alt="TGMC Live Stream"
                     fill={true}
                     className="object-cover group-hover:scale-105 transition-transform duration-500"

@@ -15,13 +15,13 @@ export const PastorBioPage: React.FC = () => {
       <section className="relative py-20 bg-[#1f2530] text-white text-center space-y-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <span className="text-xs font-bold text-[#ecb029] uppercase tracking-wider bg-[#ecb029]/10 px-3.5 py-1 rounded-full border border-[#ecb029]/20">
-            Leadership & Ministry
+            {pastorInfo.heroBadge || "Leadership & Ministry"}
           </span>
           <h1 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight mt-2">
-            Pastor's Bio
+            {pastorInfo.heroTitle || "Pastor's Bio"}
           </h1>
           <p className="text-slate-300 text-base max-w-2xl mx-auto">
-            {pastorInfo.name} — Lead Pastor of The Great Mission Church, Uxbridge.
+            {pastorInfo.heroSubtitle || `${pastorInfo.name} — Lead Pastor of The Great Mission Church, Uxbridge.`}
           </p>
         </div>
       </section>
@@ -43,7 +43,7 @@ export const PastorBioPage: React.FC = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
                 <div className="absolute bottom-4 left-4 right-4 p-4 rounded-xl bg-black/60 backdrop-blur-md text-white border border-white/20">
                   <p className="font-bold text-base">{pastorInfo.name}</p>
-                  <p className="text-xs text-[#ecb029]">Lead Pastor · TGMC</p>
+                  <p className="text-xs text-[#ecb029]">{pastorInfo.role} · TGMC</p>
                 </div>
               </div>
             </div>
@@ -52,7 +52,7 @@ export const PastorBioPage: React.FC = () => {
             <div className="lg:col-span-7 space-y-6">
               <div>
                 <span className="text-xs font-bold text-[#478226] uppercase tracking-wider bg-[#478226]/10 px-3 py-1 rounded-full">
-                  Lead Pastoral Leadership
+                  {pastorInfo.badge || "Lead Pastoral Leadership"}
                 </span>
                 <h2 className="text-3xl sm:text-4xl font-extrabold text-[#282f3b] mt-3">
                   {pastorInfo.name}
@@ -60,19 +60,17 @@ export const PastorBioPage: React.FC = () => {
                 <p className="text-[#478226] font-bold text-sm mt-0.5">{pastorInfo.role}</p>
               </div>
 
-              <blockquote className="p-5 rounded-xl bg-[#f0f3f9] border-l-4 border-[#478226] text-slate-700 italic text-sm">
-                <Quote className="w-6 h-6 text-[#478226]/40 mb-1" />
-                "A wonderful place of worship and spiritual growth. The services are Spirit-filled, and Pr. Begin Alex leads with great dedication and love."
-              </blockquote>
+              {pastorInfo.quote && (
+                <blockquote className="p-5 rounded-xl bg-[#f0f3f9] border-l-4 border-[#478226] text-slate-700 italic text-sm">
+                  <Quote className="w-6 h-6 text-[#478226]/40 mb-1" />
+                  "{pastorInfo.quote}"
+                </blockquote>
+              )}
 
               <div className="space-y-4 text-slate-700 text-sm leading-relaxed">
                 <p>{pastorInfo.bio}</p>
-                <p>
-                  Serving families across Watford, Harefield, Hillingdon, and Greater London, Pr. Begin Alex ministers in English and Malayalam, guiding believers into spiritual maturity through biblical exposition, apostolic prayer, and compassionate pastoral care.
-                </p>
-                <p>
-                  Under his ministry, The Great Mission Church has grown into a vibrant spiritual family committed to the Great Commission of Jesus Christ: proclaiming the Gospel, making disciples, and caring for people with Christlike love.
-                </p>
+                {pastorInfo.bioParagraph2 && <p>{pastorInfo.bioParagraph2}</p>}
+                {pastorInfo.bioParagraph3 && <p>{pastorInfo.bioParagraph3}</p>}
               </div>
 
               {/* Contact Cards */}

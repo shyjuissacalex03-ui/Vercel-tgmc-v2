@@ -27,6 +27,18 @@ export const EventsPage: React.FC = () => {
   const upcomingEvents = content.upcomingEvents || defaultUpcomingEvents;
   const serviceSchedules = content.serviceSchedules || defaultServiceSchedules;
   const churchInfo = content.churchInfo || defaultChurchInfo;
+  const eventsContent = content.eventsContent || {
+    heroBadge: "Fellowship & Gatherings",
+    heroTitle: "Church Events & Services",
+    heroSubtitle: "Join our weekly worship services in Uxbridge, fasting prayer gatherings, youth fellowships, and special mission events.",
+    scheduleTitle: "Weekly Gathering Schedule",
+    scheduleSubtitle: "Regular services held at our Uxbridge worship facility and streamed online.",
+    eventsListTitle: "Upcoming Church Events",
+    eventsListSubtitle: "Mark your calendar for special services, seasonal conferences, and community gatherings.",
+    calendarTitle: "Official TGMC Google Calendar",
+    calendarSubtitle: "Interactive Schedule",
+    calendarEmbedUrl: "https://calendar.google.com/calendar/u/0/newembed?height=600&wkst=1&ctz=Europe/London&showPrint=0&showTabs=0&showTz=0&showCalendars=0&hl=en_GB&src=dGdtY2h1cmNodWtAZ21haWwuY29t&color=%23039be5",
+  };
 
   const [filter, setFilter] = useState<string>("All");
   const [searchQuery, setSearchQuery] = useState("");
@@ -83,13 +95,13 @@ export const EventsPage: React.FC = () => {
       <section className="relative py-20 bg-[#1f2530] text-white text-center space-y-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <span className="text-xs font-bold text-[#ecb029] uppercase tracking-wider bg-[#ecb029]/10 px-3.5 py-1 rounded-full border border-[#ecb029]/20">
-            Fellowship & Gatherings
+            {eventsContent.heroBadge || "Fellowship & Gatherings"}
           </span>
           <h1 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight mt-2">
-            Church Events & Services
+            {eventsContent.heroTitle || "Church Events & Services"}
           </h1>
           <p className="text-slate-300 text-base max-w-2xl mx-auto">
-            Join our weekly worship services in Uxbridge, fasting prayer gatherings, youth fellowships, and special mission events.
+            {eventsContent.heroSubtitle || "Join our weekly worship services in Uxbridge, fasting prayer gatherings, youth fellowships, and special mission events."}
           </p>
         </div>
       </section>
@@ -98,9 +110,9 @@ export const EventsPage: React.FC = () => {
       <section className="py-16 bg-[#f0f3f9] border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <div className="text-center max-w-2xl mx-auto space-y-2">
-            <h2 className="text-2xl font-bold text-[#282f3b]">Weekly Gathering Schedule</h2>
+            <h2 className="text-2xl font-bold text-[#282f3b]">{eventsContent.scheduleTitle || "Weekly Gathering Schedule"}</h2>
             <p className="text-xs text-slate-600">
-              Regular worship, prayer, and discipleship schedule at TGMC Uxbridge
+              {eventsContent.scheduleSubtitle || "Regular worship, prayer, and discipleship schedule at TGMC Uxbridge"}
             </p>
           </div>
 

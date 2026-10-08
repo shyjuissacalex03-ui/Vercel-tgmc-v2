@@ -12,22 +12,38 @@ import {
   upcomingEvents as defaultUpcomingEvents,
   galleryItems as defaultGalleryItems,
   statementsOfFaith as defaultStatementsOfFaith,
+  defaultHomeContent,
+  defaultAboutContent,
+  defaultEventsContent,
+  defaultContactContent,
+  defaultStatementOfFaithHero,
   ChurchInfo,
+  PastorInfo,
   ServiceSchedule,
   StatementOfFaith,
   GalleryItem,
   ChurchEvent,
+  HomeContent,
+  AboutPageContent,
+  EventsPageContent,
+  ContactPageContent,
+  StatementOfFaithHero,
 } from "../data/churchData.ts";
 
 export interface ChurchContentState {
   churchInfo: ChurchInfo;
-  pastorInfo: typeof defaultPastorInfo;
+  pastorInfo: PastorInfo;
   corePillars: typeof defaultCorePillars;
   heroSlides: typeof defaultHeroSlides;
   serviceSchedules: ServiceSchedule[];
   upcomingEvents: ChurchEvent[];
   galleryItems: GalleryItem[];
   statementsOfFaith: StatementOfFaith[];
+  homeContent: HomeContent;
+  aboutContent: AboutPageContent;
+  eventsContent: EventsPageContent;
+  contactContent: ContactPageContent;
+  statementOfFaithHero: StatementOfFaithHero;
 }
 
 interface ContentContextType {
@@ -46,6 +62,11 @@ const defaultContent: ChurchContentState = {
   upcomingEvents: defaultUpcomingEvents,
   galleryItems: defaultGalleryItems,
   statementsOfFaith: defaultStatementsOfFaith,
+  homeContent: defaultHomeContent,
+  aboutContent: defaultAboutContent,
+  eventsContent: defaultEventsContent,
+  contactContent: defaultContactContent,
+  statementOfFaithHero: defaultStatementOfFaithHero,
 };
 
 const ContentContext = createContext<ContentContextType>({
@@ -78,6 +99,11 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
             upcomingEvents: data.upcomingEvents || defaultContent.upcomingEvents,
             galleryItems: data.galleryItems || defaultContent.galleryItems,
             statementsOfFaith: data.statementsOfFaith || defaultContent.statementsOfFaith,
+            homeContent: data.homeContent || defaultContent.homeContent,
+            aboutContent: data.aboutContent || defaultContent.aboutContent,
+            eventsContent: data.eventsContent || defaultContent.eventsContent,
+            contactContent: data.contactContent || defaultContent.contactContent,
+            statementOfFaithHero: data.statementOfFaithHero || defaultContent.statementOfFaithHero,
           });
         } else {
           setContent(defaultContent);

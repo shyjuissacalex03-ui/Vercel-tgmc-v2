@@ -1,7 +1,11 @@
 import React from "react";
 import { Link } from "../components/Router.tsx";
 import { OptimizedImage } from "../components/OptimizedImage.tsx";
-import { churchInfo as defaultChurchInfo, pastorInfo as defaultPastorInfo } from "../data/churchData.ts";
+import {
+  churchInfo as defaultChurchInfo,
+  pastorInfo as defaultPastorInfo,
+  defaultAboutContent,
+} from "../data/churchData.ts";
 import { useContent } from "../firebase/contentContext.tsx";
 import { Compass, BookOpen, CheckCircle, ArrowRight, ShieldCheck } from "lucide-react";
 
@@ -9,13 +13,15 @@ export const AboutPage: React.FC = () => {
   const { content } = useContent();
   const churchInfo = content.churchInfo || defaultChurchInfo;
   const pastorInfo = content.pastorInfo || defaultPastorInfo;
+  const about = content.aboutContent || defaultAboutContent;
+
   return (
     <div className="bg-slate-950 text-white min-h-screen">
       {/* Hero Header */}
       <section className="relative py-20 bg-slate-900 border-b border-slate-800 overflow-hidden">
         <div className="absolute inset-0 opacity-20 pointer-events-none">
           <OptimizedImage
-            src="/images/event-worship-2.jpg"
+            src={about.heroImage || "/images/event-worship-2.jpg"}
             alt="TGMC Fellowship"
             fill={true}
             className="object-cover"
@@ -23,13 +29,13 @@ export const AboutPage: React.FC = () => {
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-semibold uppercase tracking-wider">
-            Who We Are
+            {about.heroBadge || "Who We Are"}
           </div>
           <h1 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
-            About The Great Mission Church
+            {about.heroTitle || "About The Great Mission Church"}
           </h1>
           <p className="text-slate-300 text-base max-w-2xl mx-auto">
-            A Bible-believing, Spirit-filled, CHRIST-centred, and mission-driven church community located in Uxbridge, United Kingdom.
+            {about.heroSubtitle || "A Bible-believing, Spirit-filled, CHRIST-centred, and mission-driven church community located in Uxbridge, United Kingdom."}
           </p>
         </div>
       </section>
@@ -40,12 +46,12 @@ export const AboutPage: React.FC = () => {
           {/* Identity & Heritage */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-6 space-y-6">
-              <h2 className="text-3xl font-bold text-white">Our Identity & Heritage</h2>
+              <h2 className="text-3xl font-bold text-white">{about.heritageTitle || "Our Identity & Heritage"}</h2>
               <p className="text-slate-300 text-sm leading-relaxed">
-                We are a Bible-believing, Spirit-filled, CHRIST-centred, and mission-driven church. We are passionate about living out the Gospel, walking in the power of the Holy Spirit, and reaching people from every background with the love and truth of JESUS CHRIST.
+                {about.heritageParagraph1 || "We are a Bible-believing, Spirit-filled, CHRIST-centred, and mission-driven church. We are passionate about living out the Gospel, walking in the power of the Holy Spirit, and reaching people from every background with the love and truth of JESUS CHRIST."}
               </p>
               <p className="text-slate-300 text-sm leading-relaxed">
-                Based in Uxbridge (Hillingdon), we proudly serve believers and families across Watford, Harefield, Hillingdon, and the broader Greater London region with services conducted in English and Malayalam.
+                {about.heritageParagraph2 || "Based in Uxbridge (Hillingdon), we proudly serve believers and families across Watford, Harefield, Hillingdon, and the broader Greater London region with services conducted in English and Malayalam."}
               </p>
               <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-2">
                 <p className="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
@@ -56,7 +62,7 @@ export const AboutPage: React.FC = () => {
                   Charity No. {churchInfo.contact.charityNo}
                 </p>
                 <p className="text-xs text-slate-400">
-                  Serving the community with biblical integrity, transparency, and Christian compassion.
+                  {about.charityNote || "Serving the community with biblical integrity, transparency, and Christian compassion."}
                 </p>
               </div>
             </div>
@@ -64,7 +70,7 @@ export const AboutPage: React.FC = () => {
             <div className="lg:col-span-6">
               <div className="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl h-80 sm:h-96">
                 <OptimizedImage
-                  src="/images/event-worship-2.jpg"
+                  src={about.heritageImage || "/images/event-worship-2.jpg"}
                   alt="TGMC Fellowship Hall"
                   fill={true}
                   className="object-cover hover:scale-105 transition-transform duration-500"
@@ -81,31 +87,19 @@ export const AboutPage: React.FC = () => {
                 <Compass className="w-6 h-6" />
               </div>
               <div>
-                <h3 className="text-2xl font-bold text-white">Our Mission</h3>
-                <p className="text-xs text-amber-400 font-medium mt-1">Matthew 28:18–20</p>
+                <h3 className="text-2xl font-bold text-white">{about.missionTitle || "Our Mission"}</h3>
+                <p className="text-xs text-amber-400 font-medium mt-1">{about.missionVerse || "Matthew 28:18–20"}</p>
               </div>
               <p className="text-slate-300 text-sm leading-relaxed">
-                We exist to bring people everywhere into a saving relationship with JESUS CHRIST. We do this through:
+                {about.missionIntro || "We exist to bring people everywhere into a saving relationship with JESUS CHRIST. We do this through:"}
               </p>
               <ul className="space-y-3 text-sm text-slate-300">
-                <li className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Proclaiming the Gospel</strong> with clarity, conviction, and divine boldness.
-                  </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Planting churches</strong> that reflect the heart and global mission of CHRIST.
-                  </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Equipping believers</strong> to serve GOD faithfully in every area of daily life.
-                  </span>
-                </li>
+                {(about.missionPoints || []).map((pt, idx) => (
+                  <li key={idx} className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
+                    <span>{pt}</span>
+                  </li>
+                ))}
               </ul>
             </div>
 
@@ -115,38 +109,25 @@ export const AboutPage: React.FC = () => {
                 <BookOpen className="w-6 h-6" />
               </div>
               <div>
-                <h3 className="text-2xl font-bold text-white">Our Vision</h3>
-                <p className="text-xs text-indigo-400 font-medium mt-1">Ephesians 4:12–13 | Acts 2:42</p>
+                <h3 className="text-2xl font-bold text-white">{about.visionTitle || "Our Vision"}</h3>
+                <p className="text-xs text-indigo-400 font-medium mt-1">{about.visionVerse || "Habakkuk 2:14"}</p>
               </div>
               <p className="text-slate-300 text-sm leading-relaxed">
-                Our vision is to build a vibrant body of believers focused on four key pillars:
+                {about.visionDescription || "To see a generation awakened to the glory of GOD, lives transformed by the Holy Spirit, and the Church equipped to impact the UK and beyond for eternity."}
               </p>
-              <ul className="space-y-3 text-sm text-slate-300">
-                <li className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-indigo-400 shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Evangelise</strong> the lost with the transformative message of salvation.
-                  </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-indigo-400 shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Care for</strong> people with the practical compassion of CHRIST.
-                  </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-indigo-400 shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Lead people</strong> of all nations to spiritual maturity in JESUS.
-                  </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-indigo-400 shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Build lives</strong> on the foundation of apostolic teaching and Holy Spirit power.
-                  </span>
-                </li>
-              </ul>
+              {about.coreValues && about.coreValues.length > 0 && (
+                <div className="pt-2 space-y-2">
+                  <p className="text-xs font-bold text-indigo-300 uppercase tracking-wider">Core Pillars</p>
+                  <ul className="space-y-2 text-xs text-slate-300">
+                    {about.coreValues.slice(0, 4).map((val, idx) => (
+                      <li key={idx} className="flex items-start gap-2">
+                        <CheckCircle className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
+                        <span><strong>{val.title}:</strong> {val.description}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           </div>
 

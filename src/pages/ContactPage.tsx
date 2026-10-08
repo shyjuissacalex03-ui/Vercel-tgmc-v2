@@ -22,6 +22,15 @@ import {
 export const ContactPage: React.FC = () => {
   const { content } = useContent();
   const churchInfo = content.churchInfo || defaultChurchInfo;
+  const contact = content.contactContent || {
+    heroBadge: "We'd Love to Hear From You",
+    heroTitle: "Contact The Great Mission Church",
+    heroSubtitle: "Find our location in Uxbridge, general enquiry contacts, and prayer request forms.",
+    gatheringTimes: "Every Sunday 10:00 AM – 1:00 PM | Friday Bible Study 7:00 PM",
+    mapEmbedUrl: "https://www.google.com/maps?q=150+York+Rd,+Uxbridge,+Hillingdon,+UB8+1QW",
+    prayerIntroText: "Our pastoral and intercessory prayer team prays over every petition with confidentiality and faith.",
+    enquiryIntroText: "Have questions about Sunday services, Malayalam fellowship, or ministry opportunities? Reach out to us below.",
+  };
 
   const [activeTab, setActiveTab] = useState<"contact" | "prayer">("contact");
   const [submitting, setSubmitting] = useState(false);
@@ -85,13 +94,13 @@ export const ContactPage: React.FC = () => {
       <section className="relative py-20 bg-slate-900 border-b border-slate-800 text-center space-y-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-semibold uppercase tracking-wider">
-            We'd Love to Hear From You
+            {contact.heroBadge || "We'd Love to Hear From You"}
           </div>
           <h1 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
-            Contact The Great Mission Church
+            {contact.heroTitle || "Contact The Great Mission Church"}
           </h1>
           <p className="text-slate-300 text-base max-w-2xl mx-auto">
-            Find our location in Uxbridge, general enquiry contacts, and prayer request forms.
+            {contact.heroSubtitle || "Find our location in Uxbridge, general enquiry contacts, and prayer request forms."}
           </p>
         </div>
       </section>
