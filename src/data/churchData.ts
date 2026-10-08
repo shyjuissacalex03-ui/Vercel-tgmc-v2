@@ -335,13 +335,13 @@ export const serviceSchedules: ServiceSchedule[] = [
     isLiveStreamed: true,
   },
   {
-    id: "fasting-prayer-communion",
+    id: "fasting-prayer-communions",
     day: "Sunday Services",
     time: "4:00 PM - 6:00 PM",
     title: "Sunday Worship Service",
     language: "All Believers",
     description:
-      "Monthly consecrated fasting prayer for revival, healings, community outreach, and kingdom breakthrough in West London.",
+      "Monthlys consecrated fasting prayer for revival, healings, community outreach, and kingdom breakthrough in West London.",
     location: "150 York Rd, Uxbridge, UB8 1QW",
     isLiveStreamed: false,
   },
